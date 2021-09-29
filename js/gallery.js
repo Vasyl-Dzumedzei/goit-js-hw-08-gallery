@@ -50,6 +50,8 @@ function onGalleryItemClick(event) {
     };
 };
 
+window.addEventListener('keydown', onPressEscape);
+
 closeModalRef.addEventListener('click', onCloseModal);
 
 function onCloseModal() {
@@ -57,3 +59,8 @@ function onCloseModal() {
     modalWindowRef.image.src = '';
 }
 
+function onPressEscape(event) {
+  if (event.code === 'Escape') {
+    onCloseModal();
+  };
+};
