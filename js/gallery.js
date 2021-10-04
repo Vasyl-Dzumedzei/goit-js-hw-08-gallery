@@ -3,7 +3,7 @@ import images from './app.js';
 const imagesItem = document.querySelector('.js-gallery');
 const closeModalRef = document.querySelector('button[data-action="close-lightbox"]');
 const modalWindowRef = {
-    lightbox: document.querySelector('.lightbox'),
+    lightbox: document.querySelector('.js-lightbox'),
     overlay: document.querySelector('.lightbox__overlay'),
     content: document.querySelector('.lightbox__content'),
     image: document.querySelector('.lightbox__image'),
@@ -48,19 +48,27 @@ function onGalleryItemClick(event) {
         modalWindowRef.image.src = event.target.dataset.source;
         modalWindowRef.lightbox.classList.add('is-open')
     };
+
+    window.addEventListener('keydown', onPressEscape);
 };
 
-window.addEventListener('keydown', onPressEscape);
-
 closeModalRef.addEventListener('click', onCloseModal);
+modalWindowRef.overlay.addEventListener('click', onOverlayClick)
 
 function onCloseModal() {
     modalWindowRef.lightbox.classList.remove('is-open');
     modalWindowRef.image.src = '';
+    window.removeEventListener('keydown', onPressEscape);
 }
 
 function onPressEscape(event) {
   if (event.code === 'Escape') {
+    onCloseModal();
+  };
+};
+
+function onOverlayClick(event) {
+  if (event.target === event.currentTarget) {
     onCloseModal();
   };
 };
